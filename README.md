@@ -1,1 +1,1 @@
-# 2021-computefest
+# 2021-ComputeFest

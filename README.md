@@ -1,2 +1,1 @@
-# ComputeFest 2021 Install instructions  
-
+# ComputeFest 2021 

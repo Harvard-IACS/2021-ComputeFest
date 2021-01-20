@@ -9,7 +9,7 @@ The goal for this lab will be to setup, run, and test the three containers highl
 Install `Docker Desktop`
 
 #### Ensure Docker Memory
-- To make sure we can run multuple container go to Docker>Preferences>Resources and in "Memory" make sure you have selected > 4GB
+- To make sure we can run multiple container go to Docker>Preferences>Resources and in "Memory" make sure you have selected > 4GB
 
 ### Install VSCode  
 Follow the [instructions](https://code.visualstudio.com/download) for your operating system.  

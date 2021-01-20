@@ -36,7 +36,6 @@ ml_deploy_demo
 ├── README.md
 ├── VERSION: a semantic version file for the codebase.
 ├── Dockerfile: instruction for docker image construction.
-├── docker-compose.yaml: instruction for making and running multiple docker images.
 ├── requirements.txt: dependencies.
 ├── experiment_configs: a config file that defines an experiment.
 │   └── default.yaml: a default exp config file.
@@ -64,9 +63,6 @@ ml_deploy_demo
 │   └── iris: a task name.
 │       └── v1.joblib: a model with its version.
 ├── notebooks: notebook files are here.
-├── scripts: utility commands go here (also things that could be run by docker runtime).
-│   └── start_docker.sh
-│   └── stop_docker.sh
 ├── setup.py: an instruction for packaging the codebase as a python package.
 └── tests
 ```

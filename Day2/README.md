@@ -7,11 +7,11 @@ In this lecture, we introduce Language Modelling and walk through the advances t
 p.s., did a human write this description, or did a Transformer?
    
 
-## Lab1: 
+## Lab1: Intro to Language Models
 https://colab.research.google.com/drive/15VpKZn8IkcEiWdKOHLHgwZhofDTHg-nT?usp=sharing
-## Lab1 extras (optional): 
+## Lab1 extras (optional): Text Classification using Transfer Learning
 https://colab.research.google.com/drive/1PL0Bz1YakBr8zwfqNgGgb_Rs8RTuG3Tj?usp=sharing
-## Lab2: 
+## Lab2: Question Answering Models
 https://colab.research.google.com/drive/1vDwF2UHqj97_8Cq_q5bpLSE8o7owpYGW?usp=sharing 
-## Lab3: 
+## Lab3: Dialog Models
 https://colab.research.google.com/drive/1j1jI12fNU392RIE7lqQyGftbU4Mr0R3e?usp=sharing 

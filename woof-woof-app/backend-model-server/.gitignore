@@ -1,0 +1,7 @@
+dataset/
+
+# misc
+.DS_Store
+
+# Jetbrains
+.idea/

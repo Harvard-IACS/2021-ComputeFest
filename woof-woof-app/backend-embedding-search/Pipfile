@@ -1,0 +1,23 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+requests = "*"
+pandas = "*"
+uvicorn = "*"
+fastapi = "*"
+aiofiles = "*"
+faiss-cpu = "*"
+pyarrow = "*"
+python-multipart = "*"
+opencv-python = "*"
+efficientnet = "*"
+keras-efficientnets = "*"
+tensorflow = "*"
+
+[requires]
+python_version = "3.8"

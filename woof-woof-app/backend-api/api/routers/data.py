@@ -27,7 +27,7 @@ def load_dogs():
         # Filter the dogs with images
         id_list = []
         for path in dogs_with_images:
-            id = path.split("/")[3]
+            id = path.split("/")[-1]
             id_list.append(int(id))
 
         dogs = dogs_all[dogs_all["AnimalInternal-ID"].isin(id_list)]

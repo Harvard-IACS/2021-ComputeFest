@@ -1,5 +1,5 @@
 ## Colab Notebook
-![Day 3 Colab Notebook (Morning
+[Day 3 Colab Notebook (Morning
 Session)](https://colab.research.google.com/drive/1zPmsNQ_JmHohoGikzAUpRY0qrmdTnJjg?usp=sharing)
 
 ## Day 3 Install Instructions

@@ -1,0 +1,15 @@
+# production
+pyyaml
+numpy
+pandas
+scikit-learn
+flask
+gunicorn
+tensorflow-hub
+tensorflow-datasets
+
+# dev
+coloredlogs
+flake8
+
+# etc

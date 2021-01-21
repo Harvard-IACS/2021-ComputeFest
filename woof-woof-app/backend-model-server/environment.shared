@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# The name of the docker image to produce
+export IMAGE_NAME="woofwoof-backend-model-server"
+export EXT_DATASTORE="/Users/Shared/DatasetStore/computefest2021/datastore"

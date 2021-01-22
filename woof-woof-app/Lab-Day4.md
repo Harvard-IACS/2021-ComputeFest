@@ -157,7 +157,7 @@ docker build -t 777502xxxxxx.dkr.ecr.us-east-1.amazonaws.com/computefest2021:woo
 ### Push to ECR
 - Next we will push the images we just built to ECR
 ```
-ocker push 777502xxxxxx.dkr.ecr.us-east-1.amazonaws.com/computefest2021:woofwoof-backend-api
+docker push 777502xxxxxx.dkr.ecr.us-east-1.amazonaws.com/computefest2021:woofwoof-backend-api
 docker push 777502xxxxxx.dkr.ecr.us-east-1.amazonaws.com/computefest2021:woofwoof-embedding-search
 docker push 777502xxxxxx.dkr.ecr.us-east-1.amazonaws.com/computefest2021:woofwoof-model-server
 docker push 777502xxxxxx.dkr.ecr.us-east-1.amazonaws.com/computefest2021:woofwoof-frontend

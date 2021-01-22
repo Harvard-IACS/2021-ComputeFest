@@ -149,17 +149,23 @@ aws ecr get-login-password \
 - Make sure you are the folder `woof-woof-app` in your terminal and run the following:
 ```
 docker build -t 777502xxxxxx.dkr.ecr.us-east-1.amazonaws.com/computefest2021:woofwoof-backend-api -f backend-api/Dockerfile ./backend-api
+
 docker build -t 777502xxxxxx.dkr.ecr.us-east-1.amazonaws.com/computefest2021:woofwoof-embedding-search -f backend-embedding-search/Dockerfile ./backend-embedding-search
+
 docker build -t 777502xxxxxx.dkr.ecr.us-east-1.amazonaws.com/computefest2021:woofwoof-model-server -f backend-model-server/Dockerfile ./backend-model-server
+
 docker build -t 777502xxxxxx.dkr.ecr.us-east-1.amazonaws.com/computefest2021:woofwoof-frontend -f frontend/Dockerfile ./frontend
 ```
 
 ### Push to ECR
 - Next we will push the images we just built to ECR
 ```
-ocker push 777502xxxxxx.dkr.ecr.us-east-1.amazonaws.com/computefest2021:woofwoof-backend-api
+docker push 777502xxxxxx.dkr.ecr.us-east-1.amazonaws.com/computefest2021:woofwoof-backend-api
+
 docker push 777502xxxxxx.dkr.ecr.us-east-1.amazonaws.com/computefest2021:woofwoof-embedding-search
+
 docker push 777502xxxxxx.dkr.ecr.us-east-1.amazonaws.com/computefest2021:woofwoof-model-server
+
 docker push 777502xxxxxx.dkr.ecr.us-east-1.amazonaws.com/computefest2021:woofwoof-frontend
 ```
 

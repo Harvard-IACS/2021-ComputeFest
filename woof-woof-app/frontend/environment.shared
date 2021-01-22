@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# The name of the docker image to produce
+export IMAGE_NAME="woofwoof-frontend"

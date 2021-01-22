@@ -40,7 +40,7 @@ async def generic_exception_handler(request: Request, exc: Exception):
 
 @app.on_event("startup")
 async def startup():
-    #api_utils.ensure_data_loaded()
+    api_utils.ensure_data_loaded()
     pass
 
 @app.on_event("shutdown")
@@ -59,4 +59,4 @@ async def get_index():
     }
 
 # Additional routers here
-#app.include_router(data.router, prefix=prefix)
+app.include_router(data.router, prefix=prefix)

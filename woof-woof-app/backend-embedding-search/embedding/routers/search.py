@@ -111,6 +111,12 @@ def load_dogs():
         print(dogs.shape)
         dogs = dogs.rename(columns={"AnimalInternal-ID": "AnimalInternalID"})
         dogs = dogs.drop(columns=["AnimalPattern"])
+
+        # Compute age of dog
+        dogs['DOB'] = pd.to_datetime(dogs['AnimalDOB'], format='%Y%m%d')
+        dogs["Year"] = pd.DatetimeIndex(dogs['DOB']).year
+        dogs["Age"] = (pd.to_datetime('now') - dogs['DOB']).astype('<m8[Y]')
+        
         print(dogs.head())
     return dogs
 

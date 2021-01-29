@@ -1,0 +1,53 @@
+---
+- name: "Build docker images and push them to GCR"
+  hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Build backend-api container image
+    community.general.docker_image:
+      build:
+        path: /backend-api
+      name: gcr.io/{{ gcp_project }}/computefest2021:woofwoof-backend-api
+      source: build
+  - name: Push backend-api image to GCR
+    community.general.docker_image:
+      name: gcr.io/{{ gcp_project }}/computefest2021:woofwoof-backend-api
+      repository: gcr.io/{{ gcp_project }}/computefest2021:woofwoof-backend-api
+      push: yes
+      source: local
+  - name: Build backend-embedding-search container image
+    community.general.docker_image:
+      build:
+        path: /backend-embedding-search
+      name: gcr.io/{{ gcp_project }}/computefest2021:woofwoof-backend-embedding-search
+      source: build
+  - name: Push backend-embedding-search image to GCR
+    community.general.docker_image:
+      name: gcr.io/{{ gcp_project }}/computefest2021:woofwoof-backend-embedding-search
+      repository: gcr.io/{{ gcp_project }}/computefest2021:woofwoof-backend-embedding-search
+      push: yes
+      source: local
+  - name: Build backend-model-server container image
+    community.general.docker_image:
+      build:
+        path: /backend-model-server
+      name: gcr.io/{{ gcp_project }}/computefest2021:woofwoof-backend-model-server
+      source: build
+  - name: Push bbackend-model-server image to GCR
+    community.general.docker_image:
+      name: gcr.io/{{ gcp_project }}/computefest2021:woofwoof-backend-model-server
+      repository: gcr.io/{{ gcp_project }}/computefest2021:woofwoof-backend-model-server
+      push: yes
+      source: local
+  - name: Build frontend container image
+    community.general.docker_image:
+      build:
+        path: /frontend
+      name: gcr.io/{{ gcp_project }}/computefest2021:woofwoof-frontend
+      source: build
+  - name: Push frontend image to GCR
+    community.general.docker_image:
+      name: gcr.io/{{ gcp_project }}/computefest2021:woofwoof-frontend
+      repository: gcr.io/{{ gcp_project }}/computefest2021:woofwoof-frontend
+      push: yes
+      source: local

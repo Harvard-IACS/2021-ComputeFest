@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export IMAGE_NAME="woofwoof-deployment"
+export GCP_PROJECT="mlproject01-207413"
+export GCP_ZONE="us-east1-c"
+export GOOGLE_APPLICATION_CREDENTIALS=/secrets/ansible.json

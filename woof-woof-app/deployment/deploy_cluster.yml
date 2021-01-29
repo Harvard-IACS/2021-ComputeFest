@@ -1,0 +1,241 @@
+---
+- name: "Deploy Woof Woof App to Kubernetes Cluster"
+  hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: "Create Namespace"
+    k8s:
+      name: woof-woof-namespace
+      api_version: v1
+      kind: Namespace
+      state: present
+  - name: "Add nginx-ingress helm repo"
+    community.kubernetes.helm_repository:
+      name: nginx-stable
+      repo_url: https://helm.nginx.com/stable
+  - name: "Install nginx-ingress"
+    community.kubernetes.helm:
+      name: nginx-ingress
+      namespace: woof-woof-namespace
+      chart_ref: nginx-stable/nginx-ingress
+      state: present
+  - name: "Create Deployment for backend-api"
+    k8s:
+      state: present
+      definition:
+        apiVersion: v1
+        kind: Deployment
+        metadata:
+          name: backend-api
+          namespace: woof-woof-namespace
+        spec:
+          selector:
+            matchLabels:
+              run: backend-api
+          template:
+            metadata:
+              labels:
+                run: backend-api
+            spec:
+              containers:
+              - image: gcr.io/{{ gcp_project }}/computefest2021:woofwoof-backend-api
+                imagePullPolicy: IfNotPresent
+                name: backend-api
+                ports:
+                - containerPort: 9000
+                  protocol: TCP
+  - name: "Create Deployment for backend-embedding-search"
+    k8s:
+      state: present
+      definition:
+        apiVersion: v1
+        kind: Deployment
+        metadata:
+          name: backend-embedding-search
+          namespace: woof-woof-namespace
+        spec:
+          selector:
+            matchLabels:
+              run: backend-embedding-search
+          template:
+            metadata:
+              labels:
+                run: backend-embedding-search
+            spec:
+              containers:
+              - image: gcr.io/{{ gcp_project }}/computefest2021:woofwoof-backend-embedding-search
+                imagePullPolicy: IfNotPresent
+                name: backend-embedding-search
+                ports:
+                - containerPort: 9010
+                  protocol: TCP
+  - name: "Create Deployment for backend-model-server"
+    k8s:
+      state: present
+      definition:
+        apiVersion: v1
+        kind: Deployment
+        metadata:
+          name: backend-model-server
+          namespace: woof-woof-namespace
+        spec:
+          selector:
+            matchLabels:
+              run: backend-model-server
+          template:
+            metadata:
+              labels:
+                run: backend-model-server
+            spec:
+              containers:
+              - image: gcr.io/{{ gcp_project }}/computefest2021:woofwoof-backend-model-server
+                imagePullPolicy: IfNotPresent
+                name: backend-model-server
+                ports:
+                - containerPort: 9020
+                  protocol: TCP
+  - name: "Create Deployment for frontend"
+    k8s:
+      state: present
+      definition:
+        apiVersion: v1
+        kind: Deployment
+        metadata:
+          name: frontend
+          namespace: woof-woof-namespace
+        spec:
+          selector:
+            matchLabels:
+              run: frontend
+          template:
+            metadata:
+              labels:
+                run: frontend
+            spec:
+              containers:
+              - image: gcr.io/{{ gcp_project }}/computefest2021:woofwoof-frontend
+                imagePullPolicy: IfNotPresent
+                name: frontend
+                ports:
+                - containerPort: 80
+                  protocol: TCP
+  - name: "Create Service for backend-api"
+    k8s:
+      state: present
+      definition:
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: backend-api
+          namespace: woof-woof-namespace
+        spec:
+          ports:
+          - port: 9000
+            protocol: TCP
+            targetPort: 9000
+          selector:
+            run: backend-api
+          type: NodePort
+  - name: "Create Service for backend-embedding-search"
+    k8s:
+      state: present
+      definition:
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: backend-embedding-search
+          namespace: woof-woof-namespace
+        spec:
+          ports:
+          - port: 9010
+            protocol: TCP
+            targetPort: 9010
+          selector:
+            run: backend-embedding-search
+          type: NodePort
+  - name: "Create Service for backend-model-server"
+    k8s:
+      state: present
+      definition:
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: backend-model-server
+          namespace: woof-woof-namespace
+        spec:
+          ports:
+          - port: 9020
+            protocol: TCP
+            targetPort: 9020
+          selector:
+            run: backend-model-server
+          type: NodePort
+  - name: "Create Service for frontend"
+    k8s:
+      state: present
+      definition:
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: frontend
+          namespace: woof-woof-namespace
+        spec:
+          ports:
+          - port: 80
+            protocol: TCP
+            targetPort: 80
+          selector:
+            run: frontend
+          type: NodePort
+  - name: Wait for Ingress Nginx to get ready
+    shell: |
+      #!/bin/bash
+      kubectl get service nginx-ingress-nginx-ingress --namespace=woof-woof-namespace -ojson | jq -r '.status.loadBalancer.ingress[].ip'
+    register: nginx_ingress
+    delay: 10
+    retries: 20
+    until: nginx_ingress.stderr == ""
+  - name: Set Nginx Ingress IP
+    set_fact:
+      nginx_ingress_ip: "{{nginx_ingress.stdout}}"
+  - name: Debug Ingress Nginx IP Address
+    debug:
+      msg: "Ingress Nginx IP Address: {{ nginx_ingress_ip }}"
+  - name: Debug vars
+    debug:
+      var: nginx_ingress_ip
+      verbosity: 0
+  - name: "Create Ingress Controller"
+    k8s:
+      state: present
+      definition:
+        apiVersion: networking.k8s.io/v1beta1
+        kind: Ingress
+        metadata:
+          name: ingress-resource
+          namespace: woof-woof-namespace
+          annotations:
+            kubernetes.io/ingress.class: "nginx"
+            nginx.ingress.kubernetes.io/ssl-redirect: "false"
+            nginx.org/rewrites: "serviceName=backend-api rewrite=/;serviceName=backend-embedding-search rewrite=/;serviceName=backend-model-server rewrite=/"
+        spec:
+          rules:
+          - host: "{{ nginx_ingress_ip }}.xip.io"
+            http:
+              paths:
+              - path: /
+                backend:
+                  serviceName: frontend
+                  servicePort: 80
+              - path: /backend-api/
+                backend:
+                  serviceName: backend-api
+                  servicePort: 9000
+              - path: /backend-embedding-search/
+                backend:
+                  serviceName: backend-embedding-search
+                  servicePort: 9010
+              - path: /backend-model-server/
+                backend:
+                  serviceName: backend-model-server
+                  servicePort: 9020

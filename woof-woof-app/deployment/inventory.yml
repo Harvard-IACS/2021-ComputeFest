@@ -1,0 +1,3 @@
+all:
+    vars:
+      gcp_project: "mlproject01-207413"

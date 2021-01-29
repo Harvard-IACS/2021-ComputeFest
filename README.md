@@ -14,7 +14,7 @@
 [January 22nd Friday Afternoon](https://harvard.zoom.us/rec/share/gkiq_L0bChhw8FUj704LpnIoLVP_ZTv7kjqrJi1rvzzA1zotrBZ6fXvV_3JGMLM_.XRttfMxtxTTEINr5?startTime=1611340332000)
 
 
-## Woof Woof! - Project Details
+## 🐶 Woof Woof! - Project Details
 
 ### Background
 For Computefest 2021, Harvard IACS will be creating hands-on workshops that will be an in-depth tutorial on transfer learning for computer vision and language models, building applications using deep learning models and deploying them in production. The outcome of the four days workshop will be to build a full featured application for the Austin Pets Alive (APA). APA is an association of pet owners for pet owners. Our goal will be to build a reusable application, design, and framework that can be used in any animal welfare nonprofits to connect future pet owners with pets.
@@ -161,6 +161,34 @@ The filter will get applied on change of any of the filter elements and refresh 
 
 **Kubernetes Cluster**:
 - Kubernetes cluster will be used to deploy the various containers on AWS
+
+
+
+
+# 🐶 Woof Woof App! - Deploy to GCP
+
+## Prerequisites
+### Install Docker 
+Install `Docker Desktop`
+
+### Install VSCode  
+Follow the [instructions](https://code.visualstudio.com/download) for your operating system.  
+If you already have a preferred text editor, skip this step.  
+
+### Clone the github repository
+- Clone or download [this repository](https://github.com/Harvard-IACS/computefest2021)
+- Extract the repository if you had downloaded it
+
+## Create a secrets folder
+Create a folder called `secrets` under the extracted folder `woof-woof-app`. Add a GCP crediential file (*.json) with the service account having the following permissions:
+```
+Compute Admin
+Compute OS Login
+Kubernetes Engine Admin
+Container Registry Service Agent
+Service Account User
+Storage Admin
+```
 
 
 

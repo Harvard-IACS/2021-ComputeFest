@@ -180,7 +180,7 @@ If you already have a preferred text editor, skip this step.
 - Extract the repository if you had downloaded it
 
 ## Create a secrets folder
-Create a folder called `secrets` under the extracted folder `woof-woof-app`. Add a GCP crediential file (*.json) with the service account having the following permissions:
+Create a folder called `secrets` under the extracted folder `woof-woof-app`. Add a GCP credential file (*.json) with the service account having the following permissions:
 ```
 Compute Admin
 Compute OS Login
@@ -220,7 +220,7 @@ environment.shared
 inventory.yml
 ```
 
-- Edit the environment.shared file to put int your GCP specific variabales. Make sure to change GCP_PROJECT & GOOGLE_APPLICATION_CREDENTIALS
+- Edit the environment.shared file to put int your GCP specific variables. Make sure to change GCP_PROJECT & GOOGLE_APPLICATION_CREDENTIALS
 ```
 export IMAGE_NAME="woofwoof-deployment"
 export GCP_PROJECT="mlproject01-207413"
